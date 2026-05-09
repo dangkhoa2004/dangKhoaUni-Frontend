@@ -4,7 +4,7 @@
 
     <section class="relative h-[600px] flex items-center overflow-hidden">
       <div class="absolute inset-0 z-0">
-        <img src="https://images.unsplash.com/photo-1541339907198-e08756ebafe3?q=80&w=2070&auto=format&fit=crop"
+        <img src=""
           class="w-full h-full object-cover grayscale brightness-[0.6]" alt="Campus">
         <div class="absolute inset-0 bg-gradient-to-r from-black via-black/40 to-transparent"></div>
       </div>
@@ -107,7 +107,7 @@
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
           <div class="group cursor-pointer">
             <div class="aspect-video rounded-[3rem] overflow-hidden mb-8 relative border border-gray-800">
-              <img src="https://images.unsplash.com/photo-1523580494863-6f303122484b?q=80&w=2070&auto=format&fit=crop"
+              <img src=""
                 class="w-full h-full object-cover grayscale group-hover:scale-105 transition-all duration-500" alt="">
               <span
                 class="absolute top-6 left-6 px-4 py-2 bg-white text-black text-[10px] font-black uppercase tracking-widest">Sự
@@ -161,15 +161,15 @@ import Header from '@/components/layout/Header.vue';
 const programs = [
   {
     title: 'Công nghệ thông tin',
-    image: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2070&auto=format&fit=crop',
+    image: '',
   },
   {
     title: 'Kinh tế & Quản trị',
-    image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2015&auto=format&fit=crop',
+    image: '',
   },
   {
     title: 'Ngôn ngữ quốc tế',
-    image: 'https://images.unsplash.com/photo-1543165796-5426273eaab3?q=80&w=2070&auto=format&fit=crop',
+    image: '',
   }
 ];
 </script>
