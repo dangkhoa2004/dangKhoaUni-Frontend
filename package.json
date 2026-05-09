@@ -1,0 +1,26 @@
+{
+  "name": "dangkhoauni-frontend",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "axios": "^1.16.0",
+    "js-cookie": "^3.0.5",
+    "nprogress": "^0.2.0",
+    "pinia": "^3.0.4",
+    "vue": "^3.5.32",
+    "vue-router": "^5.0.6"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^6.0.6",
+    "autoprefixer": "^10.5.0",
+    "postcss": "^8.5.13",
+    "tailwindcss": "^3.4.19",
+    "vite": "^8.0.10"
+  }
+}
