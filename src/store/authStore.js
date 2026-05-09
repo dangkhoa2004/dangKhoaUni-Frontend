@@ -2,21 +2,34 @@
 import { defineStore } from 'pinia';
 import { loginAPI } from '../api/authApi';
 import Cookies from 'js-cookie';
+import { jwtDecode } from 'jwt-decode'; // Import thư viện giải mã
 
 export const useAuthStore = defineStore('auth', {
-  state: () => ({
-    // Lấy token từ Cookie
-    token: Cookies.get('token') || null,
-    // Lấy thông tin user từ LocalStorage (vì Cookie chỉ nên giữ token)
-    user: JSON.parse(localStorage.getItem('user')) || null, 
-    isLoading: false,
-    errorMessage: ''
-  }),
+  state: () => {
+    const token = Cookies.get('token') || null;
+    let user = null;
+
+    // Nếu đã có token trong cookie, giải mã để lấy user ngay lập tức
+    if (token) {
+      try {
+        user = jwtDecode(token);
+      } catch (error) {
+        console.error("Token không hợp lệ:", error);
+        Cookies.remove('token');
+      }
+    }
+
+    return {
+      token: token,
+      user: user, // Thông tin user giờ đây được lấy từ Token
+      isLoading: false,
+      errorMessage: ''
+    };
+  },
 
   getters: {
     isAuthenticated: (state) => !!state.token,
-    // Getter lấy role nhanh
-    userRole: (state) => state.user?.role || null
+    userRole: (state) => state.user?.role || null // Role lấy trực tiếp từ Payload của Token
   },
 
   actions: {
@@ -26,21 +39,15 @@ export const useAuthStore = defineStore('auth', {
 
       try {
         const data = await loginAPI(credentials);
-        
         const myToken = data.access_token; 
-        const userData = data.user;
 
-        if (myToken && userData) {
-          // 1. Cập nhật State Pinia
-          this.token = myToken;
-          this.user = userData;
-          
-          // 2. Lưu Token vào Cookie (expires 7 ngày)
+        if (myToken) {
+          // 1. Lưu Token vào Cookie
           Cookies.set('token', myToken, { expires: 7, path: '/' });
           
-          // 3. Lưu toàn bộ Object User (bao gồm role) vào LocalStorage
-          // Cần dùng JSON.stringify vì LocalStorage chỉ lưu được String
-          localStorage.setItem('user', JSON.stringify(userData));
+          // 2. Giải mã token để lấy thông tin user và cập nhật State
+          this.token = myToken;
+          this.user = jwtDecode(myToken); 
           
           return { success: true };
         } else {
@@ -55,15 +62,9 @@ export const useAuthStore = defineStore('auth', {
     },
 
     logout() {
-      // Xóa State
       this.user = null;
       this.token = null;
-      
-      // Xóa Cookie
       Cookies.remove('token', { path: '/' });
-      
-      // Xóa LocalStorage
-      localStorage.removeItem('user');
     }
   }
 });
